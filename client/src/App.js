@@ -188,7 +188,7 @@ function BookAndQuizPage() {
             <div className="book">
                 <h2 className="h2">Kniha verze 1.0</h2>
                 <div className="book__cover">
-                    <img src="/img/Bookfront.png" alt="Úvodní stránka knihy 1.0"/>
+                    <img src="https://res.cloudinary.com/dlwvf5h4t/image/upload/v1762379735/renewit/fohdwtkt9ld1pyuvzz68.png" alt="Úvodní stránka knihy 1.0"/>
                 </div>
                 <button className="btn btn--primary book__btn" onClick={handleDownload}>Stáhnout</button>
             </div>
@@ -203,7 +203,7 @@ function AuthorPage() {
     return (
         <div className="screen screen--author">
             <div className="author__image">
-                <img src="/img/author.png" alt="Michal Koudela"/>
+                <img src="https://res.cloudinary.com/dlwvf5h4t/image/upload/v1762379822/renewit/a8wgjuefvqmztpj5r1sx.jpg" alt="Michal Koudela"/>
             </div>
             <div className="author__bio">
                 <h1 className="h1">Michal Koudela</h1>

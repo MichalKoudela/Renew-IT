@@ -399,7 +399,7 @@ body{
     width: 100%;
     max-width: 60rem; /* ~960px */
     border-collapse: collapse;
-    margin: 0 auto;
+    margin-top: 30px;
     background: #fff;
     border-radius: 0.875rem;
     overflow: hidden;
