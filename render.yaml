@@ -22,3 +22,5 @@ services:
         sync: false
       - key: CLOUDINARY_API_SECRET
         sync: false
+      - key: REACT_APP_API_URL
+        sync: false
