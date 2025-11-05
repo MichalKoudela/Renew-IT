@@ -3,25 +3,25 @@ const API_URL = process.env.REACT_APP_API_URL;
 
 export default function ArticleManagmentPage() {
     const [articles, setArticles] = useState([]);
-    const [newArticle, setNewArticle] = useState({
-        title: "", tldr: "", text: "", author: "", img: "", date: ""
-    });
+    const [newArticle, setNewArticle] = useState({ title: "", tldr: "", author: "", img: "", text: "" });
 
     useEffect(() => {
         fetch(`${API_URL}/api/articles`)
             .then(res => res.json())
-            .then(data => setArticles(data))
+            .then(setArticles)
             .catch(err => console.error("Chyba načtení článků:", err));
     }, []);
 
     const addArticle = async () => {
+        if (!newArticle.title || !newArticle.text) return alert("Vyplň název a text!");
         await fetch(`${API_URL}/api/articles`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(newArticle)
+            body: JSON.stringify({ ...newArticle, date: new Date().toISOString().split("T")[0] })
         });
-        setArticles([...articles, newArticle]);
-        setNewArticle({ title: "", tldr: "", text: "", author: "", img: "", date: "" });
+        const refreshed = await fetch(`${API_URL}/api/articles`).then(r => r.json());
+        setArticles(refreshed);
+        setNewArticle({ title: "", tldr: "", author: "", img: "", text: "" });
     };
 
     const deleteArticle = async (id) => {
@@ -31,20 +31,36 @@ export default function ArticleManagmentPage() {
 
     return (
         <div className="screen">
-            <h2>Správa článků</h2>
+            <h2 className="section-title">Správa článků</h2>
             <div className="card-panel">
                 <input className="input" placeholder="Název" value={newArticle.title} onChange={e => setNewArticle({ ...newArticle, title: e.target.value })} />
                 <input className="input" placeholder="Shrnutí" value={newArticle.tldr} onChange={e => setNewArticle({ ...newArticle, tldr: e.target.value })} />
-                <textarea className="input" placeholder="Text článku" value={newArticle.text} onChange={e => setNewArticle({ ...newArticle, text: e.target.value })} />
                 <input className="input" placeholder="Autor" value={newArticle.author} onChange={e => setNewArticle({ ...newArticle, author: e.target.value })} />
+                <input className="input" placeholder="Obrázek (URL)" value={newArticle.img} onChange={e => setNewArticle({ ...newArticle, img: e.target.value })} />
+                <textarea className="input" rows="5" placeholder="Text článku" value={newArticle.text} onChange={e => setNewArticle({ ...newArticle, text: e.target.value })}></textarea>
                 <button className="btn btn--primary" onClick={addArticle}>Přidat článek</button>
             </div>
 
-            <ul>
+            <table className="admin-table">
+                <thead>
+                <tr>
+                    <th>Název</th>
+                    <th>Autor</th>
+                    <th>Datum</th>
+                    <th>Akce</th>
+                </tr>
+                </thead>
+                <tbody>
                 {articles.map(a => (
-                    <li key={a._id}>{a.title} <button onClick={() => deleteArticle(a._id)}>🗑️</button></li>
+                    <tr key={a._id}>
+                        <td>{a.title}</td>
+                        <td>{a.author}</td>
+                        <td>{a.date}</td>
+                        <td><button className="btn btn--danger" onClick={() => deleteArticle(a._id)}>🗑️</button></td>
+                    </tr>
                 ))}
-            </ul>
+                </tbody>
+            </table>
         </div>
     );
 }

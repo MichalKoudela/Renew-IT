@@ -4,16 +4,16 @@ const API_URL = process.env.REACT_APP_API_URL;
 export default function UserManagmentPage() {
     const [users, setUsers] = useState([]);
     const [newUser, setNewUser] = useState({ name: "", password_sha256: "", role: "user" });
-    const [deleteUserId, setDeleteUserId] = useState("");
 
     useEffect(() => {
         fetch(`${API_URL}/api/users`)
             .then(res => res.json())
-            .then(data => setUsers(data))
+            .then(setUsers)
             .catch(err => console.error("Chyba načtení uživatelů:", err));
     }, []);
 
     const addUser = async () => {
+        if (!newUser.name || !newUser.password_sha256) return alert("Vyplň jméno i heslo!");
         await fetch(`${API_URL}/api/users`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -31,8 +31,7 @@ export default function UserManagmentPage() {
 
     return (
         <div className="screen">
-            <h2>Správa uživatelů</h2>
-
+            <h2 className="section-title">Správa uživatelů</h2>
             <div className="card-panel">
                 <input className="input" placeholder="Jméno" value={newUser.name} onChange={e => setNewUser({ ...newUser, name: e.target.value })} />
                 <input className="input" placeholder="Heslo (sha256)" value={newUser.password_sha256} onChange={e => setNewUser({ ...newUser, password_sha256: e.target.value })} />
@@ -43,13 +42,24 @@ export default function UserManagmentPage() {
                 <button className="btn btn--primary" onClick={addUser}>Přidat uživatele</button>
             </div>
 
-            <ul>
+            <table className="admin-table">
+                <thead>
+                <tr>
+                    <th>Jméno</th>
+                    <th>Role</th>
+                    <th>Akce</th>
+                </tr>
+                </thead>
+                <tbody>
                 {users.map(u => (
-                    <li key={u._id}>
-                        {u.name} ({u.role}) <button onClick={() => deleteUser(u._id)}>🗑️</button>
-                    </li>
+                    <tr key={u._id}>
+                        <td>{u.name}</td>
+                        <td>{u.role}</td>
+                        <td><button className="btn btn--danger" onClick={() => deleteUser(u._id)}>🗑️</button></td>
+                    </tr>
                 ))}
-            </ul>
+                </tbody>
+            </table>
         </div>
     );
 }

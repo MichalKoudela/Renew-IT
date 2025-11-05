@@ -13,6 +13,7 @@ export default function QuizManagmentPage() {
     }, []);
 
     const addQuestion = async () => {
+        if (!newQ.question) return alert("Vyplň otázku!");
         await fetch(`${API_URL}/api/quiz`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -30,8 +31,7 @@ export default function QuizManagmentPage() {
 
     return (
         <div className="screen">
-            <h2>Správa kvízu</h2>
-
+            <h2 className="section-title">Správa kvízu</h2>
             <div className="card-panel">
                 <input className="input" placeholder="Otázka" value={newQ.question} onChange={e => setNewQ({ ...newQ, question: e.target.value })} />
                 {[1,2,3,4].map(n => (
@@ -41,13 +41,24 @@ export default function QuizManagmentPage() {
                 <button className="btn btn--primary" onClick={addQuestion}>Přidat otázku</button>
             </div>
 
-            <ul>
+            <table className="admin-table">
+                <thead>
+                <tr>
+                    <th>Otázka</th>
+                    <th>Správná odpověď</th>
+                    <th>Akce</th>
+                </tr>
+                </thead>
+                <tbody>
                 {quiz.map(q => (
-                    <li key={q._id}>
-                        {q.question} <button onClick={() => deleteQuestion(q._id)}>🗑️</button>
-                    </li>
+                    <tr key={q._id}>
+                        <td>{q.question}</td>
+                        <td>{q.correct}</td>
+                        <td><button className="btn btn--danger" onClick={() => deleteQuestion(q._id)}>🗑️</button></td>
+                    </tr>
                 ))}
-            </ul>
+                </tbody>
+            </table>
         </div>
     );
 }
