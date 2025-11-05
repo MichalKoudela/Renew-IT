@@ -5,13 +5,21 @@ import multer from "multer";
 import mongoose from "mongoose";
 import { fileURLToPath } from "url";
 import fs from "fs";
+import { v2 as cloudinary } from "cloudinary";
 
 // === Připojení k MongoDB Atlas ===
-const MONGO_URI = process.env.MONGO_URI || "mongodb+srv://admin:qWgDhoc2jTLi8hu4@renewit.pn7uxyf.mongodb.net/?appName=RenewIT";
+const MONGO_URI = process.env.MONGO_URI || "mongodb+srv://admin:<HESLO>@cluster0.mongodb.net/renewit";
 mongoose
     .connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log("✅ Připojeno k MongoDB Atlas"))
     .catch((err) => console.error("❌ Chyba připojení k MongoDB:", err));
+
+// === Konfigurace Cloudinary ===
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
 const app = express();
 app.use(cors());
@@ -20,10 +28,6 @@ app.use(express.json());
 // === Nastavení cest ===
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const imgPath = path.join(__dirname, "..", "public", "img");
-
-// Vytvoření složky pro obrázky
-if (!fs.existsSync(imgPath)) fs.mkdirSync(imgPath, { recursive: true });
 
 // === MongoDB MODELY ===
 const User = mongoose.model(
@@ -112,24 +116,27 @@ app.delete("/api/quiz/:id", async (req, res) => {
     res.json({ success: true });
 });
 
-// ====== Obrázky ======
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => cb(null, imgPath),
-    filename: (req, file, cb) => {
-        const unique = Date.now() + "-" + Math.round(Math.random() * 1e9);
-        cb(null, file.fieldname + "-" + unique + path.extname(file.originalname));
-    },
-});
-const upload = multer({ storage });
+// ====== OBRÁZKY – Cloudinary Upload ======
+const upload = multer({ dest: "uploads/" });
 
-app.post("/api/upload", upload.single("image"), (req, res) => {
-    if (!req.file) return res.status(400).json({ error: "Soubor nebyl nahrán" });
-    const imageUrl = `/img/${req.file.filename}`;
-    console.log("📸 Nahrán obrázek:", imageUrl);
-    res.json({ success: true, imageUrl });
-});
+app.post("/api/upload", upload.single("image"), async (req, res) => {
+    try {
+        if (!req.file) return res.status(400).json({ error: "Soubor nebyl nahrán" });
 
-app.use("/img", express.static(imgPath));
+        const result = await cloudinary.uploader.upload(req.file.path, {
+            folder: "renewit"
+        });
+
+        // Smazání lokálního dočasného souboru
+        fs.unlinkSync(req.file.path);
+
+        console.log("📸 Obrázek nahrán:", result.secure_url);
+        res.json({ success: true, imageUrl: result.secure_url });
+    } catch (err) {
+        console.error("❌ Chyba při uploadu obrázku:", err);
+        res.status(500).json({ error: "Chyba při nahrávání obrázku" });
+    }
+});
 
 // === SERVE FRONTEND (volitelné) ===
 const clientPath = path.join(__dirname, "..", "client", "build");

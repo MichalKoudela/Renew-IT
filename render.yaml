@@ -1,0 +1,40 @@
+# === Render deployment configuration ===
+# Tento soubor patří do kořene projektu (např. /renewit/render.yaml)
+
+services:
+  # =======================
+  # 🟩 BACKEND (Express + MongoDB + Cloudinary)
+  # =======================
+  - type: web
+    name: renewit-server
+    env: node
+    plan: free
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 18
+      - key: MONGO_URI
+        sync: false
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+
+  # =======================
+  # 🟦 FRONTEND (React – Build & Serve)
+  # =======================
+  - type: static
+    name: renewit-client
+    rootDir: client
+    buildCommand: npm run build
+    publishPath: build
+    envVars:
+      - key: REACT_APP_API_URL
+        fromService:
+          type: web
+          name: renewit-server
+          property: url
