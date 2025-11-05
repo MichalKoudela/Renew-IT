@@ -188,7 +188,7 @@ function BookAndQuizPage() {
             <div className="book">
                 <h2 className="h2">Kniha verze 1.0</h2>
                 <div className="book__cover">
-                    <img src="/img/bookfront.png" alt="Úvodní stránka knihy 1.0"/>
+                    <img src="/img/Bookfront.png" alt="Úvodní stránka knihy 1.0"/>
                 </div>
                 <button className="btn btn--primary book__btn" onClick={handleDownload}>Stáhnout</button>
             </div>
