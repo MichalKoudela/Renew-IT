@@ -4,7 +4,7 @@ import ArticleManagmentPage from "./Pages/ArticleManagmentPage.jsx";
 import QuizManagmentPage from "./Pages/QuizManagmentPage.jsx";
 import UserManagmentPage from "./Pages/UserManagmentPage.jsx";
 import "./App.css";
-const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5050";
+const API_URL = process.env.REACT_APP_API_URL;
 
 
 /* ---------- helpers ---------- */
@@ -100,42 +100,21 @@ function HomePage({ setSelectedArticle }) {
             .catch((e) => console.error(e));
     }, []);
 
-    // vezmeme jen prvních 6
     const top = articles.slice(0, 6);
-
-    if (top.length === 0) {
-        return (
-            <div className="screen">
-                <h1 className="hero-title">IT (RE)NEWS TODAY</h1>
-                <h2 className="section-title">Nejnovější články:</h2>
-                <p>Načítám články…</p>
-            </div>
-        );
-    }
+    if (top.length === 0) return <p>Načítám články…</p>;
 
     return (
         <div className="screen">
             <h1 className="hero-title">IT (RE)NEWS TODAY</h1>
-
             <h2 className="section-title">Nejnovější články:</h2>
-
-            {/* feature + dvě kompaktní karty */}
             {top[0] && (
                 <div className="feature-row">
-                    <ArticleCard
-                        article={top[0]}
-                        onClick={() => setSelectedArticle(top[0])}
-                        className="card--featured"
-                    />
+                    <ArticleCard article={top[0]} onClick={() => setSelectedArticle(top[0])} className="card--featured" />
                     <div className="feature-row__side">
-                        {top.slice(1, 3).map((a, i) => (
-                            <ArticleCard key={i} article={a} onClick={() => setSelectedArticle(a)} compact />
-                        ))}
+                        {top.slice(1, 3).map((a, i) => <ArticleCard key={i} article={a} onClick={() => setSelectedArticle(a)} compact />)}
                     </div>
                 </div>
             )}
-
-            {/* mřížka dalších max. 3 (aby celkem bylo 6) */}
             <div className="articles-grid">
                 {top.slice(3, 6).map((a, i) => (
                     <ArticleCard key={i} article={a} onClick={() => setSelectedArticle(a)} compact />
@@ -144,6 +123,7 @@ function HomePage({ setSelectedArticle }) {
         </div>
     );
 }
+
 
 
 function ArticlesPage({ setSelectedArticle }) {
