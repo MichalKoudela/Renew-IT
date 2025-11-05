@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Michal Koudela",
+    "password_sha256": "b4008f2ed10a169c4cb3340d6e471b3ac1afb40915c768bac092793b856ab070",
+    "role": "admin"
+  },
+  {
+    "name": "admin",
+    "password_sha256": "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
+    "role": "admin"
+  }
+]
