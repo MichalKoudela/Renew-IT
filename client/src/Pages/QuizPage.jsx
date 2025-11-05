@@ -40,23 +40,23 @@ export default function QuizPage() {
 
     return (
         <div className="quiz-ui">
-            <button onClick={() => setCurrentIndex((currentIndex - 1 + quiz.length) % quiz.length)}>◀</button>
+            <button className="quiz-ui__arrow" onClick={() => setCurrentIndex((currentIndex - 1 + quiz.length) % quiz.length)}>◀</button>
 
             <div className="quiz-ui__content">
-                <h2>{current.question}</h2>
+                <h2 className="quiz-ui__question">{current.question}</h2>
                 {["1","2","3","4"].map((k) => (
-                    <button key={k} className={`quiz-btn ${selected===k ? (isCorrect ? "correct" : "wrong") : ""}`} onClick={() => handleAnswer(k)} disabled={selected !== null}>
+                    <button key={k} className={`quiz-ui__btn ${selected===k ? (isCorrect ? "is-correct" : "is-wrong") : ""}`} onClick={() => handleAnswer(k)} disabled={selected !== null}>
                         {current[k]}
                     </button>
                 ))}
-                <div>{currentIndex + 1}/{quiz.length}</div>
-                <form onSubmit={handleJump}>
-                    <input type="number" value={inputValue} onChange={e => setInputValue(e.target.value)} placeholder="Otázka #" />
-                    <button>OK</button>
+                <div className="quiz-ui__index">{currentIndex + 1}/{quiz.length}</div>
+                <form className="quiz-ui__jump" onSubmit={handleJump}>
+                    <input className="input" type="number" min="1" max={quiz.length} value={inputValue} onChange={e => setInputValue(e.target.value)} placeholder="Zadat číslo otázky" />
+                    <button className="btn" type="submit">OK</button>
                 </form>
             </div>
 
-            <button onClick={() => setCurrentIndex((currentIndex + 1) % quiz.length)}>▶</button>
+            <button className="quiz-ui__arrow" onClick={() => setCurrentIndex((currentIndex + 1) % quiz.length)}>▶</button>
         </div>
     );
 }
