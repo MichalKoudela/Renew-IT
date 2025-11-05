@@ -1,17 +1,16 @@
-# === Render deployment configuration ===
-# Tento soubor patří do kořene projektu (např. /renewit/render.yaml)
+# === Render Blueprint configuration ===
+# 🟩 Jedna služba obsluhuje backend i frontend
 
 services:
-  # =======================
-  # 🟩 BACKEND (Express + MongoDB + Cloudinary)
-  # =======================
   - type: web
     name: renewit-server
     env: node
     plan: free
     rootDir: server
-    buildCommand: npm install
-    startCommand: npm start
+    buildCommand: |
+      npm install
+      cd ../client && npm install && npm run build && cd ../server
+    startCommand: node server.js
     envVars:
       - key: NODE_VERSION
         value: 18
@@ -23,18 +22,3 @@ services:
         sync: false
       - key: CLOUDINARY_API_SECRET
         sync: false
-
-  # =======================
-  # 🟦 FRONTEND (React – Build & Serve)
-  # =======================
-  - type: static
-    name: renewit-client
-    rootDir: client
-    buildCommand: npm run build
-    publishPath: build
-    envVars:
-      - key: REACT_APP_API_URL
-        fromService:
-          type: web
-          name: renewit-server
-          property: url
