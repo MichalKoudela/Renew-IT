@@ -209,11 +209,14 @@ function AuthorPage() {
                 <h1 className="h1">Michal Koudela</h1>
                 <p className="author__date">*28.06.2006</p>
                 <p>
-                    Narodil jsem se v Hořovicích, ale vyrůstal jsem ve vesničce nedaleko Dobříše. Narodil jsem se v době, kdy už počítače vládnou světu a práce v IT je lépe placená než u průměrného lékaře, jehož přínos je však mnohem důležitější než přínos počítačů. K počítačům jsem se dostal přes videohry, jak je tomu u většiny dnešních dětí. Pamatuji si, jak jsem s tátou hrál LEGO hry na jeho počítači – známé značky jako Batman, Indiana Jones či Harry Potter. Přibližně v šesti letech jsem dostal svůj první počítač. Táta mi ho daroval, abych na něm mohl hrát hry. Také na něm byla nainstalovaná jedna hra, která změnila život milionům lidí.</p>
+                    Narodil jsem se v Hořovicích, ale vyrůstal jsem ve vesničce nedaleko Dobříše. Narodil jsem se v době, kdy už počítače vládnou světu a práce v IT je lépe placená než u průměrného lékaře, jehož přínos je však mnohem důležitější než přínos počítačů. K počítačům jsem se dostal přes videohry, jak je tomu u většiny dnešních dětí. Pamatuji si, jak jsem s tátou hrál LEGO hry na jeho počítači – známé značky jako Batman, Indiana Jones či Harry Potter. Přibližně v šesti letech jsem dostal svůj první počítač. Táta mi ho daroval, abych na něm mohl hrát hry. Také na něm byla nainstalovaná jedna hra, která změnila život milionům lidí.
+                </p>
                 <p>
-                    Teď byste možná čekali, že budu vyprávět, jak jsem se skrze Minecraft naučil programovat a stal se výborným „ajťákem“. Není tomu však tak – naopak, začal jsem hrát více počítačových her než kdy dřív. Nejen na počítači, ale i na herních konzolích. Samozřejmě to vedlo k částečnému sociálnímu odříznutí, ale zároveň jsem si tím výrazně zlepšil angličtinu. Jediné technické zkušenosti, které jsem v té době získal, byly ty, jak funguje operační systém Windows. Musel jsem totiž občas počítač spravovat a orientovat se ve struktuře souborů, abych mohl instalovat módy do her a zprovoznit pirátské kopie.</p>
+                    Teď byste možná čekali, že budu vyprávět, jak jsem se skrze Minecraft naučil programovat a stal se výborným „ajťákem“. Není tomu však tak – naopak, začal jsem hrát více počítačových her než kdy dřív. Nejen na počítači, ale i na herních konzolích. Samozřejmě to vedlo k částečnému sociálnímu odříznutí, ale zároveň jsem si tím výrazně zlepšil angličtinu. Jediné technické zkušenosti, které jsem v té době získal, byly ty, jak funguje operační systém Windows. Musel jsem totiž občas počítač spravovat a orientovat se ve struktuře souborů, abych mohl instalovat módy do her a zprovoznit pirátské kopie.
+                </p>
                 <p>
-                    Když přišel čas vybrat si střední školu, měl jsem poměrně jasno. Chtěl jsem se dostat na Smíchovskou průmyslovou školu, která se prezentovala jako nejlepší IT škola v České republice. Přijímací řízení však nebylo snadné – byl velký převis uchazečů. Kromě klasických zkoušek jsem musel dodat také portfolio a motivační dopis. A protože jsem si školu vyhlédl už v sedmé třídě, měl jsem spoustu času na práci na svém portfoliu. Začal jsem se učit programovat v jazyce C# a účastnil jsem se různých olympiád, abych zaujal. Také jsem vytvořil malou počítačovou hru v konzoli, která sice nebyla nijak zvlášť kvalitní, ale využívala principy objektově orientovaného programování (OOP), a tak mohla komisi zaujmout.</p>
+                    Když přišel čas vybrat si střední školu, měl jsem poměrně jasno. Chtěl jsem se dostat na Smíchovskou průmyslovou školu, která se prezentovala jako nejlepší IT škola v České republice. Přijímací řízení však nebylo snadné – byl velký převis uchazečů. Kromě klasických zkoušek jsem musel dodat také portfolio a motivační dopis. A protože jsem si školu vyhlédl už v sedmé třídě, měl jsem spoustu času na práci na svém portfoliu. Začal jsem se učit programovat v jazyce C# a účastnil jsem se různých olympiád, abych zaujal. Také jsem vytvořil malou počítačovou hru v konzoli, která sice nebyla nijak zvlášť kvalitní, ale využívala principy objektově orientovaného programování (OOP), a tak mohla komisi zaujmout.
+                </p>
                 <p>
                     Přihlášku jsem podal na dva obory – Informační technologie a Kybernetická bezpečnost. Byl jsem přijat na oba, a protože Kybernetická bezpečnost byla novější a náročnější na přijetí, zvolil jsem právě ji. Učil jsem se programování, počítačové sítě, hardware, procesory, výkresové aplikace a spoustu dalších témat. Největší důraz byl však kladen na naše vlastní samostudium. A zde přichází zásadní dovednost každého člověka – sebeprosazení. Během studia jsem absolvoval pokročilé kurzy zaměřené na počítačové sítě, chvíli jsem pracoval na IT oddělení naší školy a podílel jsem se na pořádání letních škol pro uchazeče.
                 </p>
@@ -224,8 +227,6 @@ function AuthorPage() {
         </div>
     );
 }
-
-/* ---------- admin shell ---------- */
 function AdminNavigationMenu({ setAdminPage, children, isAdmin }) {
     return (
         <div className="admin">
@@ -294,11 +295,10 @@ function PictureManagmentPage() {
     );
 }
 
-/* ---------- App root ---------- */
 export default function App() {
     const [state, setState] = useState(0);
     const [selectedArticle, setSelectedArticle] = useState(null);
-    const [adminpage, setAdmin] = useState(0);
+    const [adminPage, setAdmin] = useState(0);
     const [isAdmin, setIsAdmin] = useState(false);
 
     function setStateHome(x = 0) {
@@ -323,21 +323,21 @@ export default function App() {
     if (state === 2) return <NavigationMenu setStateHome={setStateHome}><BookAndQuizPage /></NavigationMenu>;
     if (state === 3) return <NavigationMenu setStateHome={setStateHome}><AuthorPage /></NavigationMenu>;
 
-    if (state === 4 && adminpage === 0)
+    if (state === 4 && adminPage === 0)
         return (
             <NavigationMenu setStateHome={setStateHome}>
                 <LoginPage onLogin={handleLogin} />
             </NavigationMenu>
         );
 
-    if (state === 4 && adminpage >= 1)
+    if (state === 4 && adminPage >= 1)
         return (
             <NavigationMenu setStateHome={setStateHome}>
                 <AdminNavigationMenu setAdminPage={setAdminPage} isAdmin={isAdmin}>
-                    {adminpage === 1 && isAdmin && <UserManagmentPage />}
-                    {adminpage === 2 && <ArticleManagmentPage />}
-                    {adminpage === 3 && <PictureManagmentPage />}
-                    {adminpage === 4 && <QuizManagmentPage />}
+                    {adminPage === 1 && isAdmin && <UserManagmentPage />}
+                    {adminPage === 2 && <ArticleManagmentPage />}
+                    {adminPage === 3 && <PictureManagmentPage />}
+                    {adminPage === 4 && <QuizManagmentPage />}
                 </AdminNavigationMenu>
             </NavigationMenu>
         );
