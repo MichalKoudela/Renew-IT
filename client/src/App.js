@@ -106,7 +106,6 @@ function HomePage({ setSelectedArticle }) {
     return (
         <div className="screen">
             <h1 className="hero-title">IT (RE)NEWS</h1>
-            <h2>Od minulosti po budoucnost</h2>
             <h2 className="section-title">Nejnovější články:</h2>
             {top[0] && (
                 <div className="feature-row">
