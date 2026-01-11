@@ -227,6 +227,7 @@ body{
     display: block;
     border-radius: 1rem;
 }
+.author__bio{text-align: justify}
 .author__bio .h1{margin:0 0 0.375rem; text-align: justify}
 .author__date{margin:0 0 1rem; font-weight:700; color:#444}
 
