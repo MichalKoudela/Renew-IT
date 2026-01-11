@@ -152,6 +152,7 @@ body{
 .modal__title{font-size:4rem; line-height:1; margin:0 0 0.5rem; font-weight:900}
 .modal__subtitle{font-size:2rem; margin:0 0 0.875rem; font-weight:800}
 .modal__layout{display:grid; grid-template-columns:1fr 23.75rem; gap:1.25rem; align-items:start}
+.modal__text{text-align: justify}
 .modal__text p{margin:0 0 0.75rem; text-align: justify}
 .modal__meta{opacity:.9}
 .modal__image{background:#dcdcdc; border-radius:0.75rem; min-height:21.25rem; overflow:hidden; display:flex}
