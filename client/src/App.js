@@ -179,7 +179,7 @@ function BookAndQuizPage() {
         const fileUrl = '/book/historie-it.pdf';
         const a = document.createElement('a');
         a.href = fileUrl;
-        a.download = 'Historie-IT.pdf';
+        a.download = 'historie-it.pdf';
         a.click();
     };
 
